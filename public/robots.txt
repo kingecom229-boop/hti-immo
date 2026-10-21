@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Pages non pertinentes pour l'indexation
+Disallow: /connexion
+Disallow: /inscription
+Disallow: /mon-espace
+Disallow: /admin
+Disallow: /favoris
+
+Sitemap: https://hti-immo.netlify.app/sitemap.xml

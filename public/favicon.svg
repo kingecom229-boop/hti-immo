@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="HTI-IMMO">
+  <rect width="64" height="64" rx="14" fill="#0f2f3d" />
+  <path d="M32 13 11 30v21h13V38h16v13h13V30L32 13Z" fill="#f5c451" />
+  <path d="M24 24h16v12H24z" fill="#0f2f3d" opacity=".25" />
+  <circle cx="32" cy="40" r="3.2" fill="#0f2f3d" />
+</svg>

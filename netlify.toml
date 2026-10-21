@@ -1,0 +1,72 @@
+# ============================================================================
+# HTI-IMMO — Configuration Netlify
+# ----------------------------------------------------------------------------
+# Ce fichier décrit UNIQUEMENT comment construire et servir le site.
+# Il ne connecte aucun site Netlify et ne déclenche aucun déploiement :
+# la mise en ligne reste une action manuelle du propriétaire du dépôt.
+# ============================================================================
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22.22.3"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# ----------------------------------------------------------------------------
+# Routage : application monopage (SPA)
+# Toute URL inconnue est servie par index.html, React Router gère ensuite.
+# Les fichiers statiques existants sont servis en priorité (200).
+# ----------------------------------------------------------------------------
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ----------------------------------------------------------------------------
+# En-têtes de sécurité (appliqués aux réponses servies par Netlify)
+# ----------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    X-XSS-Protection = "0"
+    # La CSP autorise uniquement le site, Supabase (API + temps réel + stockage).
+    # Adaptez *.supabase.co si vous utilisez un domaine Supabase personnalisé.
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co; font-src 'self' data:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; manifest-src 'self'; upgrade-insecure-requests"
+
+# Les assets versionnés par Vite sont immuables.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Le HTML ne doit jamais être mis en cache (sinon ancienne version servie).
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ----------------------------------------------------------------------------
+# Contextes de déploiement
+# Les "deploy previews" et "branch deploys" restent désactivés par défaut
+# tant que le propriétaire ne les active pas dans l'interface Netlify.
+# ----------------------------------------------------------------------------
+[context.production.environment]
+  VITE_DEMO_MODE = "false"
+
+[context.deploy-preview.environment]
+  VITE_DEMO_MODE = "true"
+
+[context.branch-deploy.environment]
+  VITE_DEMO_MODE = "true"

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration d’un salon de colocation (image de démonstration)">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eef3f2"/><stop offset="1" stop-color="#dfe9e7"/>
+    </linearGradient>
+    <linearGradient id="sofa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e2b25f"/><stop offset="1" stop-color="#c8943f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg2)"/>
+  <rect y="450" width="800" height="150" fill="#d7c6ae"/>
+  <g opacity=".3" stroke="#b39d80" stroke-width="2">
+    <path d="M0 500h800M0 550h800"/>
+  </g>
+  <rect x="80" y="80" width="220" height="250" rx="8" fill="#cfe0e6" stroke="#f8f4ec" stroke-width="12"/>
+  <path d="M80 240h220M190 80v250" stroke="#f8f4ec" stroke-width="8"/>
+  <g>
+    <rect x="330" y="300" width="390" height="120" rx="22" fill="url(#sofa)"/>
+    <rect x="330" y="262" width="390" height="60" rx="22" fill="#f0c87c"/>
+    <rect x="316" y="300" width="36" height="120" rx="16" fill="#d8a851"/>
+    <rect x="698" y="300" width="36" height="120" rx="16" fill="#d8a851"/>
+    <rect x="356" y="272" width="86" height="70" rx="12" fill="#3f6b78"/>
+    <rect x="462" y="286" width="70" height="56" rx="12" fill="#f8f4ec"/>
+    <rect x="352" y="418" width="14" height="34" rx="6" fill="#7a5c3a"/>
+    <rect x="686" y="418" width="14" height="34" rx="6" fill="#7a5c3a"/>
+  </g>
+  <g>
+    <rect x="120" y="400" width="150" height="18" rx="8" fill="#a97c4c"/>
+    <rect x="140" y="418" width="12" height="60" rx="5" fill="#8a643c"/>
+    <rect x="238" y="418" width="12" height="60" rx="5" fill="#8a643c"/>
+    <rect x="150" y="368" width="30" height="32" rx="5" fill="#5f8a5b"/>
+    <circle cx="200" cy="384" r="16" fill="#e07a5f"/>
+  </g>
+  <g>
+    <path d="M420 120c40 0 70 30 70 70s-70 90-70 90-70-50-70-90 30-70 70-70z" fill="#f5c451" opacity=".9"/>
+    <circle cx="420" cy="186" r="26" fill="#8a643c"/>
+  </g>
+  <text x="46" y="576" fill="#5b6770" font-family="system-ui, sans-serif" font-size="18" opacity=".65">Image de démonstration</text>
+</svg>

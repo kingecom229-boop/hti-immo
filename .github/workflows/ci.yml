@@ -1,0 +1,79 @@
+name: CI
+
+# Vérifications automatiques uniquement : aucun déploiement, aucune migration
+# distante, aucune écriture dans le dépôt. Le déploiement reste manuel et
+# réservé au propriétaire du dépôt.
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Typecheck · Lint · Tests · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v4
+
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Contrôle TypeScript
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Vérification du formatage
+        run: npm run format:check
+
+      - name: Tests unitaires et d'intégration (interface)
+        run: npm run test
+
+      - name: Tests de base de données (schéma, contraintes, RLS)
+        run: npm run test:db
+
+      - name: Build de production
+        run: npm run build
+
+      - name: Vérification des secrets exposés dans le bundle
+        run: |
+          if grep -rIE "service_role|sb_secret_|SUPABASE_DB_PASSWORD|postgresql://" dist/ ; then
+            echo "::error::Un secret potentiel a été détecté dans le bundle construit."
+            exit 1
+          fi
+          echo "Aucun secret détecté dans dist/."
+
+  audit:
+    name: Dépendances vulnérables
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      # Échoue uniquement sur les vulnérabilités élevées ou critiques.
+      - name: Audit npm (high et critical)
+        run: npm audit --audit-level=high

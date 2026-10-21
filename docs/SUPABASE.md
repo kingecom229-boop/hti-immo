@@ -59,14 +59,20 @@ supabase db push
 Les migrations sont **additives** : elles créent des tables, types, index,
 fonctions et politiques. Elles ne suppriment aucune donnée existante.
 
-### Option B — Éditeur SQL du dashboard
+### Option B — Éditeur SQL du dashboard (sans CLI)
 
-Ouvrez `SQL Editor`, puis exécutez dans cet ordre le contenu de :
+Trois fichiers prêts à coller se trouvent dans **`supabase/sql-editor/`** :
 
-1. `supabase/migrations/20261021000001_init_schema.sql`
-2. `supabase/migrations/20261021000002_functions_triggers.sql`
-3. `supabase/migrations/20261021000003_rls_policies.sql`
-4. `supabase/migrations/20261021000004_storage.sql`
+1. **`01_schema_complet.sql`** — les 4 migrations concaténées, à coller d'un bloc
+   puis à exécuter. Résultat attendu : `Success. No rows returned`.
+2. **`02_verifications.sql`** — contrôle lecture seule de l'installation
+   (10 vérifications). Tout doit renvoyer `OK`.
+3. **`03_premier_administrateur.sql`** — promotion de ton compte en `admin`
+   (remplacer `remplace-moi@exemple.fr`).
+
+Ces scripts sont idempotents et transactionnels : ils peuvent être rejoués sans
+risque. Ils ont été validés dans PostgreSQL réel avant livraison.
+Voir [`supabase/sql-editor/README.md`](../supabase/sql-editor/README.md).
 
 ## 4. Vérifier le backend
 

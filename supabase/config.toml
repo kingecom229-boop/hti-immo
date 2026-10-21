@@ -1,0 +1,54 @@
+# ============================================================================
+# HTI-IMMO — Configuration Supabase CLI (développement local)
+# ----------------------------------------------------------------------------
+# Ce fichier ne configure AUCUN projet distant et ne déploie rien.
+# Il permet de lancer une pile Supabase locale :
+#     supabase start
+#     supabase db reset      # applique les migrations + supabase/seed.sql
+#
+# Pour lier un projet distant (action volontaire du propriétaire) :
+#     supabase link --project-ref <ref>
+#     supabase db push       # ⚠️ à exécuter consciemment, hors CI
+# ============================================================================
+
+project_id = "hti-immo"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+# URL de l'application en développement : utilisée dans les liens d'e-mail.
+site_url = "http://localhost:5173"
+# Domaines autorisés pour les redirections d'authentification.
+additional_redirect_urls = [
+  "http://localhost:5173/**",
+  "https://hti-immo.netlify.app/**",
+]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+# Double confirmation lors d'un changement d'adresse e-mail.
+double_confirm_changes = true
+# Confirmation d'e-mail obligatoire : le compte n'est actif qu'après le clic.
+enable_confirmations = true
+
+[storage]
+enabled = true
+# 5 Mo : cohérent avec la validation côté client et le bucket `listing-photos`.
+file_size_limit = "5MiB"

@@ -8,16 +8,17 @@ testé faute d'accès externe.
 
 ## 1. Commandes
 
-| Commande                | Portée                              | Résultat                     |
-| ----------------------- | ----------------------------------- | ---------------------------- |
-| `npm ci`                | Installation reproductible          | ✅ 282 paquets installés     |
-| `npm run typecheck`     | `tsc --noEmit`, mode strict         | ✅ 0 erreur                  |
-| `npm run lint`          | ESLint (TypeScript + React Hooks)   | ✅ 0 erreur, 0 avertissement |
-| `npm run format:check`  | Prettier                            | ✅ conforme                  |
-| `npm test`              | 17 fichiers, **157 tests**          | ✅ 157 réussis               |
-| `npm run test:db`       | 2 fichiers, **56 tests** PostgreSQL | ✅ 56 réussis                |
-| `npm run build`         | Build de production Vite            | ✅ 2 151 modules, ~3,5 s     |
-| `npm run test:coverage` | Couverture V8                       | ✅ seuils atteints           |
+| Commande                       | Portée                              | Résultat                     |
+| ------------------------------ | ----------------------------------- | ---------------------------- |
+| `npm ci`                       | Installation reproductible          | ✅ 282 paquets installés     |
+| `npm run typecheck`            | `tsc --noEmit`, mode strict         | ✅ 0 erreur                  |
+| `npm run lint`                 | ESLint (TypeScript + React Hooks)   | ✅ 0 erreur, 0 avertissement |
+| `npm run format:check`         | Prettier                            | ✅ conforme                  |
+| `npm test`                     | 17 fichiers, **157 tests**          | ✅ 157 réussis               |
+| `npm run test:db`              | 2 fichiers, **56 tests** PostgreSQL | ✅ 56 réussis                |
+| `npm run build`                | Build de production Vite            | ✅ 2 151 modules, ~3,5 s     |
+| `npm run test:coverage`        | Couverture V8                       | ✅ seuils atteints           |
+| `npm audit --audit-level=high` | Dépendances vulnérables             | ✅ 0 vulnérabilité           |
 
 ### Couverture mesurée (interface)
 
@@ -100,17 +101,17 @@ nécessaire : la production n'est jamais sollicitée.
 
 ## 5. Éléments NON testés ou BLOQUÉS
 
-| Élément                                                                    | Statut        | Raison                                                               |
-| -------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------------- |
-| Connexion réelle à Supabase (inscription, confirmation e-mail)             | **BLOQUÉ**    | Aucun projet Supabase ni identifiants fournis                        |
-| Application des migrations sur Supabase                                    | **BLOQUÉ**    | Nécessite votre compte                                               |
-| Stockage des photos sur Supabase Storage                                   | **BLOQUÉ**    | Aucun bucket réel ; le code et les politiques sont testés en SQL     |
-| Déploiement Netlify et en-têtes de production                              | **BLOQUÉ**    | Aucun site Netlify fourni ; configuration prête mais non déployée    |
-| Vérification visuelle dans un navigateur réel (responsive, Safari/Firefox) | **NON TESTÉ** | Tests jsdom uniquement, aucune session navigateur                    |
-| Tests end-to-end Playwright                                                | **NON TESTÉ** | Hors périmètre de cette itération                                    |
-| Envoi d'e-mails transactionnels                                            | **NON TESTÉ** | Nécessite un fournisseur SMTP                                        |
-| Audit des dépendances (`npm audit`)                                        | **NON TESTÉ** | Bloqué par l'accès réseau restreint du bac à sable ; la CI l'exécute |
-| Mesure de performance réelle (Lighthouse)                                  | **NON TESTÉ** | Nécessite un déploiement                                             |
+| Élément                                                                    | Statut        | Raison                                                            |
+| -------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------- |
+| Connexion réelle à Supabase (inscription, confirmation e-mail)             | **BLOQUÉ**    | Aucun projet Supabase ni identifiants fournis                     |
+| Application des migrations sur Supabase                                    | **BLOQUÉ**    | Nécessite votre compte                                            |
+| Stockage des photos sur Supabase Storage                                   | **BLOQUÉ**    | Aucun bucket réel ; le code et les politiques sont testés en SQL  |
+| Déploiement Netlify et en-têtes de production                              | **BLOQUÉ**    | Aucun site Netlify fourni ; configuration prête mais non déployée |
+| Vérification visuelle dans un navigateur réel (responsive, Safari/Firefox) | **NON TESTÉ** | Tests jsdom uniquement, aucune session navigateur                 |
+| Tests end-to-end Playwright                                                | **NON TESTÉ** | Hors périmètre de cette itération                                 |
+| Envoi d'e-mails transactionnels                                            | **NON TESTÉ** | Nécessite un fournisseur SMTP                                     |
+| Audit des dépendances (`npm audit --audit-level=high`)                     | ✅ **RÉUSSI** | 0 vulnérabilité détectée (la CI le rejoue)                        |
+| Mesure de performance réelle (Lighthouse)                                  | **NON TESTÉ** | Nécessite un déploiement                                          |
 
 ## 6. Note sur une règle ESLint désactivée
 
